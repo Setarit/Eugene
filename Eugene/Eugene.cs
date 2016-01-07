@@ -30,5 +30,15 @@ namespace Eugene
             var remoteVersion = versionChecker.GetRemoteVersionNumber();
             return remoteVersion > _currentSoftwareVersion;
         }
+
+        /// <summary>
+        /// Checks on the remote location where the new software version can be downloaded
+        /// </summary>
+        /// <returns>The URL where the new software version is located</returns>
+        public string GetDownloadLocation()
+        {
+            RemoteDownloadLocation downloadLocation = new RemoteDownloadLocation(_configFileReader.GetConfigurationValue("location"));
+            return downloadLocation.GetDownloadLocation();
+        }
     }
 }

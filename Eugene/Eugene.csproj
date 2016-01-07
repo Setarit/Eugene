@@ -43,7 +43,10 @@
     <Compile Include="Eugene.cs" />
     <Compile Include="Exception\EugeneException.cs" />
     <Compile Include="Exception\InvalidConfigurationFileException.cs" />
+    <Compile Include="Exception\InvalidNetworkPath.cs" />
     <Compile Include="Exception\InvalidRemoteVersion.cs" />
+    <Compile Include="Network\RemoteDownloadLocation.cs" />
+    <Compile Include="Network\RemoteFileReader.cs" />
     <Compile Include="Network\RemoteVersionChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using Eugene.Exception;
+using System.Text.RegularExpressions;
 
 namespace Eugene.Network
 {
@@ -31,15 +32,14 @@ namespace Eugene.Network
         /// <returns>The remote version number</returns>
         public double GetRemoteVersionNumber()
         {
-            var task = _remoteVersionRetreiveTask();
-            task.RunSynchronously();
-            return task.Result;
+            var networkReader = RemoteFileReader.GetInstance();
+            networkReader.RemoteLocation = _remoteLocation;
+            networkReader.ReadRemoteFile();
+            return _remoteVersionRetreiveTask(networkReader.GetValue("version"));
         }
 
-        private async Task<double> _remoteVersionRetreiveTask()
-        {
-            System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
-            string version = await client.GetStringAsync(_remoteLocation);
+        private double _remoteVersionRetreiveTask(string version)
+        {            
             double versionAsDouble = -1;
             try {
                 versionAsDouble = double.Parse(version);
