@@ -21,6 +21,16 @@ namespace Eugene
         }
 
         /// <summary>
+        /// Constructor that reads the current local software version from the local Eugene file
+        /// </summary>
+        /// <param name="configFileLocation">The absolute path of the configuration file</param>
+        public Eugene(string configFileLocation)
+        {
+            _configFileReader = new ConfigurationFileReader(configFileLocation);
+            _currentSoftwareVersion = double.Parse(_configFileReader.GetConfigurationValue("localVersion"));
+        }
+
+        /// <summary>
         /// Checks with the configuration file and the current version is outdated
         /// </summary>
         /// <returns>True if a new version is available</returns>

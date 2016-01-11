@@ -44,7 +44,9 @@ namespace Eugene.Network
                 {
                     throw new InvalidNetworkPath(e.Message, e);
                 }
-                string[] lines = Regex.Split(response.Content.ReadAsStringAsync().Result, "\n");
+                var responseContents = response.Content.ReadAsStringAsync().Result;
+                if (responseContents == null || responseContents.Length == 0) return;
+                string[] lines = Regex.Split(responseContents, "\n");
                 foreach (var line in lines)
                 {
                     string[] keyValue = Regex.Split(line, ">");
