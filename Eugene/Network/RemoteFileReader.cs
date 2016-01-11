@@ -29,14 +29,14 @@ namespace Eugene.Network
 
         private RemoteFileReader() { }
 
-        private async void _readRemoteFile()
+        private void _readRemoteFile()
         {
             if (RemoteLocation == null) throw new InvalidNetworkPath("No network URL given");
-            if (!RemoteLocation.EndsWith(".eug")) throw new InvalidNetworkPath("Not an Eugene file");
+            if (!RemoteLocation.EndsWith(".eug")) throw new InvalidNetworkPath("The remote file is not an Eugene file");
             values = new Dictionary<string, string>();
             using (var client = new System.Net.Http.HttpClient())
             {
-                var response = await client.GetAsync(RemoteLocation);
+                var response = client.GetAsync(RemoteLocation).Result;
                 try
                 {
                     response.EnsureSuccessStatusCode();
@@ -44,7 +44,7 @@ namespace Eugene.Network
                 {
                     throw new InvalidNetworkPath(e.Message, e);
                 }
-                string[] lines = Regex.Split(await response.Content.ReadAsStringAsync(), "\n");
+                string[] lines = Regex.Split(response.Content.ReadAsStringAsync().Result, "\n");
                 foreach (var line in lines)
                 {
                     string[] keyValue = Regex.Split(line, ">");
@@ -60,6 +60,7 @@ namespace Eugene.Network
         /// <returns>The value for the given key</returns>
         internal string GetValue(string key)
         {
+            if (!values.ContainsKey(key)) throw new UnknownConfigurationKeyException("The key '" + key + "' does not exist in the remote Eugene file");
             return values[key];
         }
 

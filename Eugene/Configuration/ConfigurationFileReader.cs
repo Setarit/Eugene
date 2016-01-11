@@ -38,6 +38,7 @@ namespace Eugene.Configuration
         /// <returns>The value for the configuration key</returns>
         public string GetConfigurationValue(string key)
         {
+            if(!_valuesMap.ContainsKey(key)) { throw new UnknownConfigurationKeyException("The key '" + key + "' is not defined in the configuration file"); }
             return _valuesMap[key];
         }
     }

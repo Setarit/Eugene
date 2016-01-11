@@ -46,6 +46,7 @@
     <Compile Include="Exception\InvalidConfigurationFileException.cs" />
     <Compile Include="Exception\InvalidNetworkPath.cs" />
     <Compile Include="Exception\InvalidRemoteVersion.cs" />
+    <Compile Include="Exception\UnknownConfigurationKeyException.cs" />
     <Compile Include="Network\RemoteDownloadLocation.cs" />
     <Compile Include="Network\RemoteFileReader.cs" />
     <Compile Include="Network\RemoteVersionChecker.cs" />
