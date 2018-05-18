@@ -41,6 +41,7 @@ namespace Eugene.Network
         private double _remoteVersionRetreiveTask(string version)
         {            
             double versionAsDouble = -1;
+            version = RemoveNonDigitCharacters(version);
             try {
                 versionAsDouble = double.Parse(version);
             }catch(System.Exception e)
@@ -48,6 +49,16 @@ namespace Eugene.Network
                 throw new InvalidRemoteVersion(e.Message, e);
             }
             return versionAsDouble;
+        }
+
+        /// <summary>
+        /// Removes the non digit characters from the version string to allow support for semantic versioning
+        /// </summary>
+        /// <param name="version">The version as string</param>
+        /// <returns>Sanitized version as a string</returns>
+        private string RemoveNonDigitCharacters(string version)
+        {
+            return Regex.Replace(version, @"\D", "");
         }
     }
 }
